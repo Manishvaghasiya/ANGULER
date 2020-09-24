@@ -5,8 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CONDITION_COLUMN, PARAMS } from '../../../../../shared/constant';
-import { ToastService, ConditionService, PaginationService } from '../../../../../core/services';
-import { ConditionModel } from '../../../../../models';
+import { ToastService, ConditionService, PaginationService, TemplateService } from '../../../../../core/services';
+import { ConditionModel, TemplateModel } from '../../../../../models';
 
 @Component({
   selector: 'app-conditions',
@@ -20,6 +20,8 @@ export class ConditionsComponent implements OnInit {
   conditionId: number;
   conditions: ConditionModel[];
   condition: ConditionModel;
+  updateFlag = false;
+  allTemplates: TemplateModel[];
 
   // tabuler var
   dataSource = new MatTableDataSource();
@@ -43,6 +45,7 @@ export class ConditionsComponent implements OnInit {
     private paginationService: PaginationService,
     private matDialog: MatDialog,
     private toastService: ToastService,
+    private templateService: TemplateService,
     private conditionService: ConditionService
   ) {
     this.route.queryParams.subscribe(params => {
@@ -102,8 +105,11 @@ export class ConditionsComponent implements OnInit {
 
   openDialog(dialog: TemplateRef<any>, data?: ConditionModel) {
     if (data) {
+      this.updateFlag = true;
       this.conditionId = data.id;
       this.setConditionData(data);
+    } else {
+      this.updateFlag = false;
     }
     this.matDialog.open(dialog, {
       autoFocus: false,
@@ -125,7 +131,7 @@ export class ConditionsComponent implements OnInit {
         this.totalDataLength, this.pageIndex, this.pageSize
       );
       this.currentDataLength = this.paginationService.returnCurrentDataLength();
-      this.conditions = response.body;
+      this.dataSource.data = this.conditions = response.body;
     }, error => {
       this.toastService.showDanger(error.error.detail);
     });
@@ -188,6 +194,7 @@ export class ConditionsComponent implements OnInit {
     this.conditionService.updateCondition(condition).subscribe(_ => {
       this.toastService.showSuccess('Condition updated successfully');
       this.getConditions();
+      this.updateFlag = false;
       this.matDialog.closeAll();
       this.conditionForm.reset();
     }, error => {

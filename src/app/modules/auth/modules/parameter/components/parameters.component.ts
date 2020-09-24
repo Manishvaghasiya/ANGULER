@@ -5,8 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PARAMETER_COLUMN, PARAMS } from '../../../../../shared/constant';
-import { ToastService, ParameterService, PaginationService } from '../../../../../core/services';
-import { ParameterModel } from '../../../../../models';
+import { ToastService, ParameterService, PaginationService, TemplateService } from '../../../../../core/services';
+import { ParameterModel, TemplateModel } from '../../../../../models';
 
 @Component({
   selector: 'app-parameters',
@@ -20,6 +20,8 @@ export class ParametersComponent implements OnInit {
   parameterId: number;
   parameters: ParameterModel[];
   parameter: ParameterModel;
+  updateFlag = false;
+  allTemplates: TemplateModel[];
 
   // tabuler var
   dataSource = new MatTableDataSource();
@@ -40,6 +42,7 @@ export class ParametersComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
+    private templateService: TemplateService,
     private matDialog: MatDialog,
     private paginationService: PaginationService,
     private toastService: ToastService,
@@ -57,10 +60,11 @@ export class ParametersComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   ngOnInit(): void {
-    this.getParameters();
+    this.getTemplates();
     this.parameterForm = this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
-      description: new FormControl('')
+      description: new FormControl(''),
+      templates: new FormControl('', [Validators.required])
     });
     this.dataSource.sort = this.sort;
   }
@@ -101,8 +105,11 @@ export class ParametersComponent implements OnInit {
 
   openDialog(dialog: TemplateRef<any>, data?: ParameterModel) {
     if (data) {
+      this.updateFlag = true;
       this.parameterId = data.id;
       this.setParameterData(data);
+    } else {
+      this.updateFlag = false;
     }
     this.matDialog.open(dialog, {
       autoFocus: false,
@@ -114,6 +121,15 @@ export class ParametersComponent implements OnInit {
   setParameterData(parameter: ParameterModel) {
     this.parameterForm.controls.name.setValue(parameter.name);
     this.parameterForm.controls.description.setValue(parameter.description);
+    const templates = [];
+    this.allTemplates.forEach((item) => {
+      parameter.templates.forEach((x) => {
+        if (item.id === x.id) {
+          templates.push(item);
+        }
+      });
+    });
+    this.parameterForm.controls.templates.setValue(templates);
   }
 
   getParameters() {
@@ -123,7 +139,7 @@ export class ParametersComponent implements OnInit {
         this.totalDataLength, this.pageIndex, this.pageSize
       );
       this.currentDataLength = this.paginationService.returnCurrentDataLength();
-      this.parameters = response.body;
+      this.dataSource.data = this.parameters = response.body;
     }, error => {
       this.toastService.showDanger(error.error.detail);
     });
@@ -137,6 +153,14 @@ export class ParametersComponent implements OnInit {
     });
   }
 
+  getTemplates() {
+    this.templateService.getTemplates().subscribe((response: any) => {
+      this.allTemplates = response.body;
+    }, error => {
+      this.toastService.showDanger(error.error.detail);
+    });
+  }
+
   createParameter() {
     if (this.parameterForm.invalid) {
       this.parameterForm.markAllAsTouched();
@@ -145,7 +169,8 @@ export class ParametersComponent implements OnInit {
 
     const parameter: ParameterModel = {
       name: this.parameterForm.value.name,
-      description: this.parameterForm.value.description
+      description: this.parameterForm.value.description,
+      templates: this.parameterForm.value.templates
     };
 
     this.parameterService.createParameter(parameter).subscribe(_ => {
@@ -178,12 +203,14 @@ export class ParametersComponent implements OnInit {
     const parameter: ParameterModel = {
       id: this.parameterId,
       name: this.parameterForm.value.name,
-      description: this.parameterForm.value.description
+      description: this.parameterForm.value.description,
+      templates: this.parameterForm.value.templates
     };
 
     this.parameterService.updateParameter(parameter).subscribe(_ => {
       this.toastService.showSuccess('Parameter updated successfully');
       this.getParameters();
+      this.updateFlag = false;
       this.matDialog.closeAll();
       this.parameterForm.reset();
     }, error => {

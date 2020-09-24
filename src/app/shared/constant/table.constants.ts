@@ -6,7 +6,7 @@ export const USER_AUTHORITY = [
 ];
 
 // template columns
-export const TEMPLATE_COLUMN = ['id', 'name', 'description', 'matchCount', 'actions'];
+export const TEMPLATE_COLUMN = ['id', 'name', 'description', 'actions'];
 
 // condition table
 export const CONDITION_COLUMN = ['id', 'parameterId', 'parameterValue', 'templateId', 'actions'];
