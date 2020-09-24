@@ -31,10 +31,11 @@ $topbar-alt: #398bf7;
         }
         .navbar-light .navbar-nav .nav-item > {
             a.nav-link {
-                color: #a6b7bf;
+                color: #fff;
+                padding-left: 40px;
                 &:hover,
                 &:focus {
-                    color:#242a33!important;
+                    color:#fff !important;
                 }
             }
         }

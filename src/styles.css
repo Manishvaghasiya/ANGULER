@@ -787,3 +787,22 @@ a.color-grey {
         margin-left: 0 !important;
     }
 }
+
+
+
+.navbar-brand img {   
+    width: 220px;
+}
+.topbar .navbar-nav .nav-item a{
+color: #fff;
+}
+@media (max-width: 991px) {
+    .topbar .navbar-collapse .navbar-collapse {
+        position: absolute;
+        top: 60px;
+        background: rgb(36, 59, 85);
+        width: 100%;
+        left: 0px;
+        margin-top: 2px;
+    }
+}

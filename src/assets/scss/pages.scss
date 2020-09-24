@@ -144,13 +144,14 @@ File: scss
 .footer {
   bottom: 0;
   color: $bodytext;
-  left: 0px;
+  left: 0px !important;
   padding: 10px;
   position: absolute;
   right: 0;
   border-top: 1px solid $border;
   background: $white;
   transition: 0.2s ease-in;
+  bottom: 5px;
 }
 
 
