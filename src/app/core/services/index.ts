@@ -4,3 +4,6 @@ export * from './pagination.service';
 export * from './toast.service';
 export * from './dashboard.service';
 export * from './data-modification.service';
+export * from './template.service';
+export * from './condition.service';
+export * from './parameter.service';
