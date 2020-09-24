@@ -37,6 +37,10 @@ export class ParametersComponent implements OnInit {
   currentDataLength: number;
 
   params = PARAMS;
+  templateParams = {
+    index: 1,
+    size: 2000
+  };
 
   constructor(
     private formBuilder: FormBuilder,
@@ -133,7 +137,7 @@ export class ParametersComponent implements OnInit {
   }
 
   getParameters() {
-    this.parameterService.getParameters().subscribe((response: any) => {
+    this.parameterService.getParameters(this.params).subscribe((response: any) => {
       this.totalDataLength = response.headers.get('X-Total-Count');
       this.possibleIndex = this.paginationService.getPossibleIndexNumber(
         this.totalDataLength, this.pageIndex, this.pageSize
@@ -154,7 +158,7 @@ export class ParametersComponent implements OnInit {
   }
 
   getTemplates() {
-    this.templateService.getTemplates().subscribe((response: any) => {
+    this.templateService.getTemplates(this.templateParams).subscribe((response: any) => {
       this.allTemplates = response.body;
     }, error => {
       this.toastService.showDanger(error.error.detail);

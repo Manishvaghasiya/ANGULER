@@ -2,7 +2,7 @@ import { TemplateModel } from './template';
 
 export interface ParameterModel {
     id?: number;
-    name: string;
+    name?: string;
     description?: string;
-    templates: TemplateModel[];
+    templates?: TemplateModel[];
 }

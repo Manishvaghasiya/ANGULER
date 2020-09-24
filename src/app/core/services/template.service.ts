@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TemplateModel } from '../../models/template';
+import { Params, TemplateModel } from '../../models';
 import { HttpClientService } from '../interceptors/http-client.service';
 
 @Injectable({
@@ -13,8 +13,8 @@ export class TemplateService {
         return this.httpService.post(`api/templates`, template);
     }
 
-    getTemplates() {
-        return this.httpService.get(`api/templates`);
+    getTemplates(param: Params) {
+        return this.httpService.get(`api/templates?page=${param.index}size=${param.size}`);
     }
 
     updateTemplate(template: TemplateModel) {

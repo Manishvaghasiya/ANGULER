@@ -1,6 +1,9 @@
+import { ParameterModel, TemplateModel } from '.';
+
 export interface ConditionModel {
     id?: number;
-    parameterName: string;
-    paramterValue: string;
-    resultingTemplate: string;
+    name: string;
+    parameterId: number;
+    parameterValue: string;
+    templateId: number;
 }
