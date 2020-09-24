@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "automationwhiz-licensor": {
+    "automationwhiz-hexaware": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -76,21 +76,21 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "automationwhiz-licensor:build"
+            "browserTarget": "automationwhiz-hexaware:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "automationwhiz-licensor:build:production"
+              "browserTarget": "automationwhiz-hexaware:build:production"
             },
             "staging": {
-              "browserTarget": "automationwhiz-licensor:build:staging"
+              "browserTarget": "automationwhiz-hexaware:build:staging"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "automationwhiz-licensor:build"
+            "browserTarget": "automationwhiz-hexaware:build"
           }
         },
         "test": {
@@ -125,7 +125,7 @@
         }
       }
     },
-    "automationwhiz-licensor-e2e": {
+    "automationwhiz-hexaware-e2e": {
       "root": "",
       "sourceRoot": "",
       "projectType": "application",
@@ -134,7 +134,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "automationwhiz-licensor:serve"
+            "devServerTarget": "automationwhiz-hexaware:serve"
           }
         },
         "lint": {
@@ -151,7 +151,7 @@
       }
     }
   },
-  "defaultProject": "automationwhiz-licensor",
+  "defaultProject": "automationwhiz-hexaware",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

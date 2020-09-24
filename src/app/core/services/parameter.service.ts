@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ParameterModel } from 'src/app/models/parameter';
+import { ParameterModel } from '../../models/parameter';
 import { HttpClientService } from '../interceptors/http-client.service';
 
 @Injectable({

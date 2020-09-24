@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('automationwhiz-licensor App', () => {
+describe('automationwhiz-hexaware App', () => {
   let page: AppPage;
 
   beforeEach(() => {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ConditionModel } from 'src/app/models/condition';
+import { ConditionModel } from '../../models';
 import { HttpClientService } from '../interceptors/http-client.service';
 
 @Injectable({

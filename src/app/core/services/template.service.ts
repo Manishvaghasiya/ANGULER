@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TemplateModel } from 'src/app/models/template';
+import { TemplateModel } from '../../models/template';
 import { HttpClientService } from '../interceptors/http-client.service';
 
 @Injectable({

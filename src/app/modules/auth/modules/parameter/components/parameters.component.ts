@@ -1,9 +1,12 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { ToastService, ParameterService } from 'src/app/core/services';
-import { ParameterModel } from 'src/app/models/parameter';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PARAMETER_COLUMN, PARAMS } from '../../../../../shared/constant';
+import { ToastService, ParameterService, PaginationService } from '../../../../../core/services';
+import { ParameterModel } from '../../../../../models';
 
 @Component({
   selector: 'app-parameters',
@@ -18,13 +21,40 @@ export class ParametersComponent implements OnInit {
   parameters: ParameterModel[];
   parameter: ParameterModel;
 
+  // tabuler var
+  dataSource = new MatTableDataSource();
+  displayedColumns = PARAMETER_COLUMN;
+  filterText: string;
+
+  // pagination var
+  pageSizeOptions: number[] = [5, 10, 20, 100];
+  pageIndex = 0;
+  pageSize = 5;
+  possibleIndex: number;
+  totalDataLength: number;
+  currentDataLength: number;
+
+  params = PARAMS;
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
     private matDialog: MatDialog,
+    private paginationService: PaginationService,
     private toastService: ToastService,
     private parameterService: ParameterService
-  ) { }
+  ) {
+    this.route.queryParams.subscribe(params => {
+      this.pageIndex = this.params.index = params.index ?
+        this.paginationService.verifyIndexParams(params.index) : this.pageIndex;
+      this.pageSize = this.params.size = params.size ?
+        this.paginationService.verifySizeParams(params.size) : this.pageSize;
+      this.getParameters();
+    });
+  }
+
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   ngOnInit(): void {
     this.getParameters();
@@ -32,10 +62,46 @@ export class ParametersComponent implements OnInit {
       name: new FormControl('', [Validators.required]),
       description: new FormControl('')
     });
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  pageSizeChange() {
+    this.currentDataLength = this.paginationService.pageSizeChange(
+      this.totalDataLength,
+      this.pageIndex,
+      this.pageSize,
+      '/parameters'
+    );
+  }
+
+  loadNextPage() {
+    this.currentDataLength = this.paginationService.loadNextPage(
+      this.pageIndex,
+      this.pageSize,
+      this.possibleIndex,
+      '/parameters'
+    );
+  }
+
+  loadPreviousPage() {
+    this.currentDataLength = this.paginationService.loadPreviousPage(
+      this.pageIndex,
+      this.pageSize,
+      '/parameters'
+    );
+  }
+
+  goBack() {
+    this.paginationService.goBackToHome('/dashboard');
   }
 
   openDialog(dialog: TemplateRef<any>, data?: ParameterModel) {
     if (data) {
+      this.parameterId = data.id;
       this.setParameterData(data);
     }
     this.matDialog.open(dialog, {
@@ -52,6 +118,11 @@ export class ParametersComponent implements OnInit {
 
   getParameters() {
     this.parameterService.getParameters().subscribe((response: any) => {
+      this.totalDataLength = response.headers.get('X-Total-Count');
+      this.possibleIndex = this.paginationService.getPossibleIndexNumber(
+        this.totalDataLength, this.pageIndex, this.pageSize
+      );
+      this.currentDataLength = this.paginationService.returnCurrentDataLength();
       this.parameters = response.body;
     }, error => {
       this.toastService.showDanger(error.error.detail);
