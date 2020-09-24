@@ -15,6 +15,8 @@ export class ParametersComponent implements OnInit {
 
   parameterForm: FormGroup;
   parameterId: number;
+  parameters: ParameterModel[];
+  parameter: ParameterModel;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,6 +27,7 @@ export class ParametersComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getParameters();
     this.parameterForm = this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
       description: new FormControl('')
@@ -47,6 +50,22 @@ export class ParametersComponent implements OnInit {
     this.parameterForm.controls.description.setValue(parameter.description);
   }
 
+  getParameters() {
+    this.parameterService.getParameters().subscribe((response: any) => {
+      this.parameters = response.body;
+    }, error => {
+      this.toastService.showDanger(error.error.detail);
+    });
+  }
+
+  getParameter() {
+    this.parameterService.getParameter(this.parameterId).subscribe((response: any) => {
+      this.parameter = response.body;
+    }, error => {
+      this.toastService.showDanger(error.error.detail);
+    });
+  }
+
   createParameter() {
     if (this.parameterForm.invalid) {
       this.parameterForm.markAllAsTouched();
@@ -60,6 +79,9 @@ export class ParametersComponent implements OnInit {
 
     this.parameterService.createParameter(parameter).subscribe(_ => {
       this.toastService.showSuccess('Parameter created successfully');
+      this.getParameters();
+      this.matDialog.closeAll();
+      this.parameterForm.reset();
     }, error => {
       this.toastService.showDanger(error.error.detail);
     });
@@ -69,6 +91,8 @@ export class ParametersComponent implements OnInit {
   deleteParameter() {
     this.parameterService.deleteParameter(this.parameterId).subscribe(_ => {
       this.toastService.showSuccess('Parameter deleted successfully');
+      this.getParameters();
+      this.matDialog.closeAll();
     }, error => {
       this.toastService.showDanger(error.error.detail);
     });
@@ -88,6 +112,9 @@ export class ParametersComponent implements OnInit {
 
     this.parameterService.updateParameter(parameter).subscribe(_ => {
       this.toastService.showSuccess('Parameter updated successfully');
+      this.getParameters();
+      this.matDialog.closeAll();
+      this.parameterForm.reset();
     }, error => {
       this.toastService.showDanger(error.error.detail);
     });

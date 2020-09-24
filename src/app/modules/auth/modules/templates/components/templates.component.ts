@@ -15,6 +15,8 @@ export class TemplatesComponent implements OnInit {
 
   templateForm: FormGroup;
   templateId: number;
+  templates: TemplateModel[];
+  template: TemplateModel;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,6 +27,7 @@ export class TemplatesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getTemplates();
     this.templateForm = this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
       description: new FormControl('')
@@ -47,6 +50,22 @@ export class TemplatesComponent implements OnInit {
     this.templateForm.controls.description.setValue(template.description);
   }
 
+  getTemplates() {
+    this.templateService.getTemplates().subscribe((response: any) => {
+      this.templates = response.body;
+    }, error => {
+      this.toastService.showDanger(error.error.detail);
+    });
+  }
+
+  getTemplate() {
+    this.templateService.getTemplate(this.templateId).subscribe((response: any) => {
+      this.template = response.body;
+    }, error => {
+      this.toastService.showDanger(error.error.detail);
+    });
+  }
+
   createTemplate() {
     if (this.templateForm.invalid) {
       this.templateForm.markAllAsTouched();
@@ -60,6 +79,9 @@ export class TemplatesComponent implements OnInit {
 
     this.templateService.createTemplate(template).subscribe(_ => {
       this.toastService.showSuccess('Template created successfully');
+      this.getTemplates();
+      this.matDialog.closeAll();
+      this.templateForm.reset();
     }, error => {
       this.toastService.showDanger(error.error.detail);
     });
@@ -69,6 +91,8 @@ export class TemplatesComponent implements OnInit {
   deleteTemplate() {
     this.templateService.deleteTemplate(this.templateId).subscribe(_ => {
       this.toastService.showSuccess('Template deleted successfully');
+      this.getTemplates();
+      this.matDialog.closeAll();
     }, error => {
       this.toastService.showDanger(error.error.detail);
     });
@@ -88,6 +112,9 @@ export class TemplatesComponent implements OnInit {
 
     this.templateService.updateTemplate(template).subscribe(_ => {
       this.toastService.showSuccess('Template updated successfully');
+      this.getTemplates();
+      this.matDialog.closeAll();
+      this.templateForm.reset();
     }, error => {
       this.toastService.showDanger(error.error.detail);
     });

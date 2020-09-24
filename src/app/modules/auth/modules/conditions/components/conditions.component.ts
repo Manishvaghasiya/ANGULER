@@ -15,6 +15,8 @@ export class ConditionsComponent implements OnInit {
 
   conditionForm: FormGroup;
   conditionId: number;
+  conditions: ConditionModel[];
+  condition: ConditionModel;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,6 +27,7 @@ export class ConditionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getConditions();
     this.conditionForm = this.formBuilder.group({
       parameterName: new FormControl('', [Validators.required]),
       paramterValue: new FormControl('', [Validators.required]),
@@ -49,6 +52,22 @@ export class ConditionsComponent implements OnInit {
     this.conditionForm.controls.resultingTemplate.setValue(condition.resultingTemplate);
   }
 
+  getConditions() {
+    this.conditionService.getConditions().subscribe((response: any) => {
+      this.conditions = response.body;
+    }, error => {
+      this.toastService.showDanger(error.error.detail);
+    });
+  }
+
+  getCondition() {
+    this.conditionService.getCondition(this.conditionId).subscribe((response: any) => {
+      this.condition = response.body;
+    }, error => {
+      this.toastService.showDanger(error.error.detail);
+    });
+  }
+
   createCondition() {
     if (this.conditionForm.invalid) {
       this.conditionForm.markAllAsTouched();
@@ -63,6 +82,9 @@ export class ConditionsComponent implements OnInit {
 
     this.conditionService.createCondition(condition).subscribe(_ => {
       this.toastService.showSuccess('Condition created successfully');
+      this.getConditions();
+      this.matDialog.closeAll();
+      this.conditionForm.reset();
     }, error => {
       this.toastService.showDanger(error.error.detail);
     });
@@ -72,6 +94,8 @@ export class ConditionsComponent implements OnInit {
   deleteCondition() {
     this.conditionService.deleteCondition(this.conditionId).subscribe(_ => {
       this.toastService.showSuccess('Condition deleted successfully');
+      this.getConditions();
+      this.matDialog.closeAll();
     }, error => {
       this.toastService.showDanger(error.error.detail);
     });
@@ -92,6 +116,9 @@ export class ConditionsComponent implements OnInit {
 
     this.conditionService.updateCondition(condition).subscribe(_ => {
       this.toastService.showSuccess('Condition updated successfully');
+      this.getConditions();
+      this.matDialog.closeAll();
+      this.conditionForm.reset();
     }, error => {
       this.toastService.showDanger(error.error.detail);
     });
