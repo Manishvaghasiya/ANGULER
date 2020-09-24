@@ -14,7 +14,7 @@ export class ParameterService {
     }
 
     getParameters(param: Params) {
-        return this.httpService.get(`api/parameters?page=${param.index}size=${param.size}`);
+        return this.httpService.get(`api/parameters?page=${param.index}&size=${param.size}`);
     }
 
     updateParameter(parameter: ParameterModel) {

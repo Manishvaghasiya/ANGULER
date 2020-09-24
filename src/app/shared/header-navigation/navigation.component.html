@@ -22,28 +22,29 @@
 
 
 
-    <a class="navbar-brand" href="#">
-        <img src="assets/images/awhiz/Logo.svg" alt="homepage" />
-    </a>
-    <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Dashboard</a>
+<a class="navbar-brand" href="javascript:void(0);">
+    <img src="assets/images/awhiz/Logo.svg" alt="homepage" />
+</a>
+<button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item active" [routerLink]="['/dashboard']" routerLinkActive="active">
+            <a class="nav-link" href="javascript:void(0);">Dashboard</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Templates</a>
+        <li class="nav-item" [routerLink]="['/templates']" routerLinkActive="active">
+            <a class="nav-link" href="javascript:void(0);">Templates</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Parameters</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Conditions</a>
-          </li>
-      </ul>
-    </div>
+        <li class="nav-item" [routerLink]="['/parameters']" routerLinkActive="active">
+            <a class="nav-link" href="javascript:void(0);">Parameters</a>
+        </li>
+        <li class="nav-item" [routerLink]="['/conditions']" routerLinkActive="active">
+            <a class="nav-link" href="javascript:void(0);">Conditions</a>
+        </li>
+    </ul>
+</div>
 
 
 <ng-template #logoutModel>

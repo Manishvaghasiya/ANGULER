@@ -14,7 +14,7 @@ export class ConditionService {
     }
 
     getConditions(param: Params) {
-        return this.httpService.get(`api/conditions?page=${param.index}size=${param.size}`);
+        return this.httpService.get(`api/conditions?page=${param.index}&size=${param.size}`);
     }
 
     updateCondition(condition: ConditionModel) {

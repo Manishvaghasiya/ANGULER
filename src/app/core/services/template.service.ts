@@ -14,7 +14,7 @@ export class TemplateService {
     }
 
     getTemplates(param: Params) {
-        return this.httpService.get(`api/templates?page=${param.index}size=${param.size}`);
+        return this.httpService.get(`api/templates?page=${param.index}&size=${param.size}`);
     }
 
     updateTemplate(template: TemplateModel) {
