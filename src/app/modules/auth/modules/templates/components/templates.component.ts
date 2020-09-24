@@ -121,7 +121,7 @@ export class TemplatesComponent implements OnInit {
   }
 
   getTemplates() {
-    this.templateService.getTemplates().subscribe((response: any) => {
+    this.templateService.getTemplates(this.params).subscribe((response: any) => {
       this.totalDataLength = response.headers.get('X-Total-Count');
       this.possibleIndex = this.paginationService.getPossibleIndexNumber(
         this.totalDataLength, this.pageIndex, this.pageSize

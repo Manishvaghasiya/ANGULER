@@ -5,8 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CONDITION_COLUMN, PARAMS } from '../../../../../shared/constant';
-import { ToastService, ConditionService, PaginationService, TemplateService } from '../../../../../core/services';
-import { ConditionModel, TemplateModel } from '../../../../../models';
+import { ToastService, ConditionService, PaginationService, TemplateService, ParameterService } from '../../../../../core/services';
+import { ConditionModel, ParameterModel, TemplateModel } from '../../../../../models';
 
 @Component({
   selector: 'app-conditions',
@@ -22,6 +22,7 @@ export class ConditionsComponent implements OnInit {
   condition: ConditionModel;
   updateFlag = false;
   allTemplates: TemplateModel[];
+  allParameters: ParameterModel[];
 
   // tabuler var
   dataSource = new MatTableDataSource();
@@ -37,12 +38,17 @@ export class ConditionsComponent implements OnInit {
   currentDataLength: number;
 
   params = PARAMS;
+  altParams = {
+    index: 1,
+    size: 2000
+  };
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private paginationService: PaginationService,
+    private parameterService: ParameterService,
     private matDialog: MatDialog,
     private toastService: ToastService,
     private templateService: TemplateService,
@@ -60,11 +66,13 @@ export class ConditionsComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   ngOnInit(): void {
-    this.getConditions();
+    this.getTemplates();
+    this.getParameters();
     this.conditionForm = this.formBuilder.group({
-      parameterName: new FormControl('', [Validators.required]),
-      paramterValue: new FormControl('', [Validators.required]),
-      resultingTemplate: new FormControl('', [Validators.required])
+      name: new FormControl('', [Validators.required]),
+      parameterId: new FormControl('', [Validators.required]),
+      parameterValue: new FormControl('', [Validators.required]),
+      templateId: new FormControl('', [Validators.required])
     });
     this.dataSource.sort = this.sort;
   }
@@ -119,13 +127,30 @@ export class ConditionsComponent implements OnInit {
   }
 
   setConditionData(condition: ConditionModel) {
-    this.conditionForm.controls.parameterName.setValue(condition.parameterName);
-    this.conditionForm.controls.paramterValue.setValue(condition.paramterValue);
-    this.conditionForm.controls.resultingTemplate.setValue(condition.resultingTemplate);
+    this.conditionForm.controls.name.setValue(condition.name);
+    this.conditionForm.controls.parameterId.setValue(condition.parameterId);
+    this.conditionForm.controls.parameterValue.setValue(condition.parameterValue);
+    this.conditionForm.controls.templateId.setValue(condition.templateId);
+  }
+
+  getTemplates() {
+    this.templateService.getTemplates(this.altParams).subscribe((response: any) => {
+      this.allTemplates = response.body;
+    }, error => {
+      this.toastService.showDanger(error.error.detail);
+    });
+  }
+
+  getParameters() {
+    this.parameterService.getParameters(this.altParams).subscribe((response: any) => {
+      this.allParameters = response.body;
+    }, error => {
+      this.toastService.showDanger(error.error.detail);
+    });
   }
 
   getConditions() {
-    this.conditionService.getConditions().subscribe((response: any) => {
+    this.conditionService.getConditions(this.params).subscribe((response: any) => {
       this.totalDataLength = response.headers.get('X-Total-Count');
       this.possibleIndex = this.paginationService.getPossibleIndexNumber(
         this.totalDataLength, this.pageIndex, this.pageSize
@@ -152,9 +177,10 @@ export class ConditionsComponent implements OnInit {
     }
 
     const condition: ConditionModel = {
-      parameterName: this.conditionForm.value.parameterName,
-      paramterValue: this.conditionForm.value.paramterValue,
-      resultingTemplate: this.conditionForm.value.resultingTemplate
+      name: this.conditionForm.value.name,
+      parameterId: this.conditionForm.value.parameterId,
+      parameterValue: this.conditionForm.value.parameterValue,
+      templateId: this.conditionForm.value.templateId
     };
 
     this.conditionService.createCondition(condition).subscribe(_ => {
@@ -186,9 +212,10 @@ export class ConditionsComponent implements OnInit {
 
     const condition: ConditionModel = {
       id: this.conditionId,
-      parameterName: this.conditionForm.value.parameterName,
-      paramterValue: this.conditionForm.value.paramterValue,
-      resultingTemplate: this.conditionForm.value.resultingTemplate
+      name: this.conditionForm.value.name,
+      parameterId: this.conditionForm.value.parameterId,
+      parameterValue: this.conditionForm.value.parameterValue,
+      templateId: this.conditionForm.value.templateId
     };
 
     this.conditionService.updateCondition(condition).subscribe(_ => {

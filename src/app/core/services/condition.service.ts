@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ConditionModel } from '../../models';
+import { ConditionModel, Params } from '../../models';
 import { HttpClientService } from '../interceptors/http-client.service';
 
 @Injectable({
@@ -13,8 +13,8 @@ export class ConditionService {
         return this.httpService.post(`api/conditions`, condition);
     }
 
-    getConditions() {
-        return this.httpService.get(`api/conditions`);
+    getConditions(param: Params) {
+        return this.httpService.get(`api/conditions?page=${param.index}size=${param.size}`);
     }
 
     updateCondition(condition: ConditionModel) {

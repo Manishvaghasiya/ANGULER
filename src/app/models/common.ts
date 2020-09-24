@@ -11,3 +11,8 @@ export interface FilteredDataModel {
     completed?: number;
     created?: number;
 }
+
+export interface Params {
+    index: number;
+    size: number;
+}

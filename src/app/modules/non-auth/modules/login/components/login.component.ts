@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
     };
     this.loginService.loginUser(userModel).subscribe((response: any) => {
       this.authService.setAuthToken(response.id_token);
-      this.toastService.showSuccess('Welcome To Automationwhiz Licensor');
+      this.toastService.showSuccess('Welcome To HexaWhiz');
       this.router.navigate(['./dashboard']);
     }, error => {
       if (error.status === 0) {

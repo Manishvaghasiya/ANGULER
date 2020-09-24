@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ParameterModel } from '../../models/parameter';
+import { ParameterModel, Params } from '../../models';
 import { HttpClientService } from '../interceptors/http-client.service';
 
 @Injectable({
@@ -13,8 +13,8 @@ export class ParameterService {
         return this.httpService.post(`api/parameters`, parameter);
     }
 
-    getParameters() {
-        return this.httpService.get(`api/parameters`);
+    getParameters(param: Params) {
+        return this.httpService.get(`api/parameters?page=${param.index}size=${param.size}`);
     }
 
     updateParameter(parameter: ParameterModel) {
