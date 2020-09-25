@@ -294,14 +294,15 @@
                     </button>
                 </div>
                 <div class="modal-body">
+
+                    <!-- add table here -->
+
                     <div *ngIf="!evaluatedResponse?.drawBetweenTemplates">
-                        <!-- add table here -->
                         Suitable template for this rule is
                         {{evaluatedResponse?.templates?.name}} and has match count of
                         {{evaluatedResponse?.templates?.matchCount}}.
                     </div>
                     <div *ngIf="evaluatedResponse?.drawBetweenTemplates">
-                        <!-- add table here  -->
                         We have found multiple templates which are suitable for this rule. which are
                         <div *ngFor="let template of evaluatedResponse?.resultingTemplates; let i = index">
                             ({{i+1}}) {{template?.name}} and has match count of {{template?.matchCount}}.
