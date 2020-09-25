@@ -198,7 +198,6 @@ export class ConditionsComponent implements OnInit {
   createRule() {
     this.conditionService.createRules(this.selection.selected).subscribe((response: any) => {
       this.evaluatedResponse = response;
-      this.selection.clear();
     }, error => {
       this.toastService.showDanger(error.error.detail);
     });
