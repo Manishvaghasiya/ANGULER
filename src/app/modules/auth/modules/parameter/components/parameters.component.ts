@@ -38,7 +38,7 @@ export class ParametersComponent implements OnInit {
 
   params = PARAMS;
   templateParams = {
-    index: 1,
+    index: 0,
     size: 2000
   };
 

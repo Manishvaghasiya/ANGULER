@@ -39,7 +39,7 @@ export class ConditionsComponent implements OnInit {
 
   params = PARAMS;
   altParams = {
-    index: 1,
+    index: 0,
     size: 2000
   };
 

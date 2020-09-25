@@ -6,4 +6,6 @@ export interface ConditionModel {
     parameterId: number;
     parameterValue: string;
     templateId: number;
+    parametersDTO?: ParameterModel[];
+    templatesDTO?: TemplateModel[];
 }
