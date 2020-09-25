@@ -811,4 +811,15 @@ color: #fff;
 .filter-dropdown-multi {
     margin-top: 31px !important;
     margin-left: 26px;
+    min-width: calc(100% + 28px) !important;
+}
+.filter-dropdown-single{
+    margin-top: 31px !important;
+    margin-left: 0px;
+}
+
+.mat-checkbox-checked .mat-checkbox-background {background: #243b55;}
+
+.mat-checkbox .mat-checkbox-input {
+    visibility: hidden;
 }

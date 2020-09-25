@@ -170,8 +170,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Select Parameter <span class="required-field">*</span></label>
-                                        <mat-select class="form-control" formControlName="parameterId"
-                                            panelClass="filter-dropdown-multi" placeholder="Select Parameter">
+                                        <mat-select class="form-control" disableOptionCentering formControlName="parameterId"
+                                            panelClass="filter-dropdown-single" placeholder="Select Parameter">
                                             <mat-option *ngFor="let item of allParameters" [value]="item.id">
                                                 {{ item.name }}
                                             </mat-option>
@@ -209,8 +209,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Templates <span class="required-field">*</span></label>
-                                        <mat-select class="form-control" formControlName="templateId"
-                                            panelClass="filter-dropdown-multi" placeholder="Select Template">
+                                        <mat-select class="form-control" disableOptionCentering formControlName="templateId"
+                                            panelClass="filter-dropdown-single" placeholder="Select Template">
                                             <mat-option *ngFor="let item of allTemplates" [value]="item.id">
                                                 {{ item.name }}
                                             </mat-option>
