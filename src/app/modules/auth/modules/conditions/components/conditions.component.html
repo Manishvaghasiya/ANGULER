@@ -11,6 +11,9 @@
             </div>
             <div class="col-md-6">
                 <ul class="list-unstyled d-flex m-0 justify-content-end action-main-links">
+                    <li *ngIf="this.selection.selected.length > 0"><a href="javascript:void(0);"
+                            (click)="createRule(); openDialog(createRuleModal);">
+                            <i class="fas fa-plus"></i> Evaluate</a></li>
                     <li><a href="javascript:void(0);" (click)="openDialog(createConditionModal);">
                             <i class="fas fa-plus"></i> Create</a></li>
                     <li><a href="javascript:void(0);" (click)="getConditions()"><i class="fas fa-sync-alt"></i> Refresh
@@ -45,8 +48,17 @@
     <table class="table table-bordered table-striped" mat-table [dataSource]="dataSource" matSort>
 
         <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
-            <td mat-cell *matCellDef="let element">{{element?.id}} </td>
+            <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+                </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                </mat-checkbox>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="name">
@@ -92,7 +104,7 @@
     </table>
 </div>
 
-<div class="pagination-wrap" [hidden]="!dataSource?.data?.length">
+<div class="pagination-wrap" [hidden]="true">
     <div class="row">
         <div class="col-md-4">
             <div class="page-count">
@@ -149,8 +161,8 @@
         <div class="modal-dialog m-auto">
             <div class="modal-content border-0">
                 <div class="modal-header">
-                    <h5 class="mb-0" *ngIf="updateFlag"><i class="fas fa-edit"></i> Update Parameter</h5>
-                    <h5 class="mb-0" *ngIf="!updateFlag"><i class="fas fa-plus"></i> Create Parameter</h5>
+                    <h5 class="mb-0" *ngIf="updateFlag"><i class="fas fa-edit"></i> Update Condition</h5>
+                    <h5 class="mb-0" *ngIf="!updateFlag"><i class="fas fa-plus"></i> Create Condition</h5>
                     <button type="button" class="close" (click)="conditionForm.reset()" data-dismiss="modal"
                         aria-label="Close" matDialogClose>
                         <span aria-hidden="true">&times;</span>
@@ -164,10 +176,10 @@
                                     <div class="form-group">
                                         <label>Name <span class="required-field">*</span></label>
                                         <input type="text" class="form-control ng-pristine ng-invalid ng-touched"
-                                            placeholder="ex. Parameter 1" formControlName="name">
+                                            placeholder="ex. Condition 1" formControlName="name">
                                         <div class="error-show" *ngIf="conditionForm.controls.name.errors 
                                     && (conditionForm.controls.name.dirty || conditionForm.controls.name.touched)">
-                                            <span *ngIf="conditionForm.controls.name.errors.required">rule name
+                                            <span *ngIf="conditionForm.controls.name.errors.required">condition name
                                                 is required</span>
                                         </div>
                                     </div>
@@ -265,6 +277,37 @@
                 <div class="modal-footer justify-content-end">
                     <button type="button" (click)="deleteCondition()" class="btn btn-primary btn-sm">Delete</button>
                     <button type="button" class="btn btn-secondary btn-sm" matDialogClose>Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #createRuleModal>
+    <div class="aw-common-modal">
+        <div class="modal-dialog m-auto">
+            <div class="modal-content border-0">
+                <div class="modal-header">
+                    <h5 class="mb-0"><i class="fas fa-poll"></i> Result</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" matDialogClose>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div *ngIf="!evaluatedResponse?.drawBetweenTemplates">
+                        Suitable template for this rule is
+                        {{evaluatedResponse?.resultingTemplates[0]?.name}} and has match count of
+                        {{evaluatedResponse?.resultingTemplates[0]?.matchCount}}.
+                    </div>
+                    <div *ngIf="evaluatedResponse?.drawBetweenTemplates">
+                        We have found multiple templates which are suitable for this rule. which are
+                        <div *ngFor="let template of evaluatedResponse?.resultingTemplates; let i = index">
+                            ({{i+1}}) {{template?.name}} and has match count of {{template?.matchCount}}.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-secondary btn-sm" matDialogClose>Close</button>
                 </div>
             </div>
         </div>
