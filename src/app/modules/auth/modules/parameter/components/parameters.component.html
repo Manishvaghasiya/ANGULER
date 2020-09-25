@@ -185,7 +185,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Templates <span class="required-field">*</span></label>
-                                        <mat-select class="form-control" formControlName="templates"
+                                        <mat-select class="form-control" disableOptionCentering formControlName="templates"
                                             panelClass="filter-dropdown-multi" placeholder="Select Template" multiple>
                                             <mat-option *ngFor="let item of allTemplates" [value]="item">
                                                 {{ item.name }}

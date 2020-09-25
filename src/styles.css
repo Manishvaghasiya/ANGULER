@@ -157,6 +157,7 @@ p.text-muted.link-share {
     font-size: 12px;
     color: #ef5350;
     font-weight: 400;
+    position: absolute;
 }
 /* login page css end here */
 
@@ -805,4 +806,9 @@ color: #fff;
         left: 0px;
         margin-top: 2px;
     }
+}
+
+.filter-dropdown-multi {
+    margin-top: 31px !important;
+    margin-left: 26px;
 }

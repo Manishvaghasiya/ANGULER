@@ -33,10 +33,16 @@ $topbar-alt: #398bf7;
             a.nav-link {
                 color: #fff;
                 padding-left: 40px;
+                font-weight: 500;
                 &:hover,
                 &:focus {
-                    color:#fff !important;
+                    color: #e99339;
                 }
+            }
+        }
+        .navbar-light .navbar-nav .nav-item.active{
+            a{
+                color: #e99339 !important;
             }
         }
         
