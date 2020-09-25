@@ -14,7 +14,7 @@ export class ConditionService {
     }
 
     getConditions(param: Params) {
-        return this.httpService.get(`api/conditions?page=${param.index}&size=${param.size}`);
+        return this.httpService.get(`api/conditions?eagerload=true`);
     }
 
     updateCondition(condition: ConditionModel) {
@@ -27,6 +27,13 @@ export class ConditionService {
 
     deleteCondition(id: number) {
         return this.httpService.delete(`api/conditions/${id}`);
+    }
+
+    createRules(data: ConditionModel[]) {
+        const tmp = [{
+            conditions: data
+        }];
+        return this.httpService.post(`api/conditions/evaluate`, tmp[0]);
     }
 
 }

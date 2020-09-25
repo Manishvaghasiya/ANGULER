@@ -9,3 +9,11 @@ export interface ConditionModel {
     parametersDTO?: ParameterModel[];
     templatesDTO?: TemplateModel[];
 }
+
+export interface RuleModel {
+    conditions: ConditionModel[];
+    drawBetweenTemplates: boolean;
+    missingConditions: any;
+    resultingTemplates: TemplateModel[];
+    templates: TemplateModel;
+}

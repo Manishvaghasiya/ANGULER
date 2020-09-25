@@ -6,7 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CONDITION_COLUMN, PARAMS } from '../../../../../shared/constant';
 import { ToastService, ConditionService, PaginationService, TemplateService, ParameterService } from '../../../../../core/services';
-import { ConditionModel, ParameterModel, TemplateModel } from '../../../../../models';
+import { ConditionModel, ParameterModel, RuleModel, TemplateModel } from '../../../../../models';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-conditions',
@@ -23,11 +24,13 @@ export class ConditionsComponent implements OnInit {
   updateFlag = false;
   allTemplates: TemplateModel[];
   allParameters: ParameterModel[];
+  evaluatedResponse: RuleModel;
 
   // tabuler var
   dataSource = new MatTableDataSource();
   displayedColumns = CONDITION_COLUMN;
   filterText: string;
+  selection = new SelectionModel<any>(true, []);
 
   // pagination var
   pageSizeOptions: number[] = [5, 10, 20, 100];
@@ -79,6 +82,28 @@ export class ConditionsComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: any): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
   pageSizeChange() {
@@ -165,6 +190,14 @@ export class ConditionsComponent implements OnInit {
   getCondition() {
     this.conditionService.getCondition(this.conditionId).subscribe((response: any) => {
       this.condition = response.body;
+    }, error => {
+      this.toastService.showDanger(error.error.detail);
+    });
+  }
+
+  createRule() {
+    this.conditionService.createRules(this.selection.selected).subscribe((response: any) => {
+      this.evaluatedResponse = response;
     }, error => {
       this.toastService.showDanger(error.error.detail);
     });
