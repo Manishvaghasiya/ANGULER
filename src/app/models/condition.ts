@@ -15,5 +15,5 @@ export interface RuleModel {
     drawBetweenTemplates: boolean;
     missingConditions: any;
     resultingTemplates: TemplateModel[];
-    templates: TemplateModel[];
+    templates: TemplateModel;
 }
