@@ -12,7 +12,10 @@
             <div class="col-md-6">
                 <ul class="list-unstyled d-flex m-0 justify-content-end action-main-links">
                     <li *ngIf="this.selection.selected.length > 0"><a href="javascript:void(0);"
-                            (click)="createRule(); openDialog(createRuleModal);">
+                            (click)="openDialog(createRuleModal);">
+                            <i class="fas fa-plus"></i> Rule</a></li>
+                    <li *ngIf="this.selection.selected.length > 0"><a href="javascript:void(0);"
+                            (click)="evaluteConditions(); openDialog(evaluteModel);">
                             <i class="fas fa-plus"></i> Evaluate</a></li>
                     <li><a href="javascript:void(0);" (click)="openDialog(createConditionModal);">
                             <i class="fas fa-plus"></i> Create</a></li>
@@ -53,7 +56,12 @@
 
         <ng-container matColumnDef="parameterValue">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Parameter Value</th>
-            <td mat-cell *matCellDef="let element">{{element?.parameterValue}} </td>
+            <td mat-cell *matCellDef="let element">
+                <form [formGroup]="updateConditionForm" class="form ng-pristine ng-invalid ng-touched" novalidate>
+                    <input type="text" class="form-control ng-pristine ng-invalid ng-touched"
+                        placeholder="{{element?.parameterValue}}" formControlName="parameterValue">
+                </form>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="templateId">
@@ -66,7 +74,7 @@
             <td mat-cell *matCellDef="let element">
                 <ul class="list-unstyled action-links">
                     <li title="Update">
-                        <a href="javascript:void(0);" (click)="openDialog(createConditionModal, element)">
+                        <a href="javascript:void(0);" (click)="updateCondition(element)">
                             <i class="fas fa-edit" style="font-size: 12px;"> </i>
                         </a>
                     </li>
@@ -170,8 +178,9 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Select Parameter <span class="required-field">*</span></label>
-                                        <mat-select class="form-control" disableOptionCentering formControlName="parameterId"
-                                            panelClass="filter-dropdown-single" placeholder="Select Parameter">
+                                        <mat-select class="form-control" disableOptionCentering
+                                            formControlName="parameterId" panelClass="filter-dropdown-single"
+                                            placeholder="Select Parameter">
                                             <mat-option *ngFor="let item of allParameters" [value]="item.id">
                                                 {{ item.name }}
                                             </mat-option>
@@ -209,8 +218,9 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Templates <span class="required-field">*</span></label>
-                                        <mat-select class="form-control" disableOptionCentering formControlName="templateId"
-                                            panelClass="filter-dropdown-single" placeholder="Select Template">
+                                        <mat-select class="form-control" disableOptionCentering
+                                            formControlName="templateId" panelClass="filter-dropdown-single"
+                                            placeholder="Select Template">
                                             <mat-option *ngFor="let item of allTemplates" [value]="item.id">
                                                 {{ item.name }}
                                             </mat-option>
@@ -263,7 +273,7 @@
     </div>
 </ng-template>
 
-<ng-template #createRuleModal>
+<ng-template #evaluteModel>
     <div class="aw-common-modal">
         <div class="modal-dialog m-auto">
             <div class="modal-content border-0">
@@ -310,6 +320,47 @@
                 <div class="modal-footer justify-content-end">
                     <button type="button" class="btn btn-secondary btn-sm" (click)="selection.clear()"
                         matDialogClose>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #createRuleModal>
+    <div class="aw-common-modal">
+        <div class="modal-dialog m-auto">
+            <div class="modal-content border-0">
+                <div class="modal-header">
+                    <h5 class="mb-0"><i class="fas fa-plus"></i> Create Rule</h5>
+                    <button type="button" class="close" (click)="ruleForm.reset()" data-dismiss="modal"
+                        aria-label="Close" matDialogClose>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <form [formGroup]="ruleForm" class="form ng-pristine ng-invalid ng-touched" novalidate>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Name <span class="required-field">*</span></label>
+                                        <input type="text" class="form-control ng-pristine ng-invalid ng-touched"
+                                            placeholder="ex. Condition 1" formControlName="name">
+                                        <div class="error-show" *ngIf="ruleForm.controls.name.errors 
+                                    && (ruleForm.controls.name.dirty || ruleForm.controls.name.touched)">
+                                            <span *ngIf="ruleForm.controls.name.errors.required">rule name
+                                                is required</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" (click)="createRule()" class="btn btn-primary btn-sm">Submit</button>
+                    <button type="button" class="btn btn-secondary btn-sm" (click)="ruleForm.reset()"
+                        matDialogClose>Cancel</button>
                 </div>
             </div>
         </div>

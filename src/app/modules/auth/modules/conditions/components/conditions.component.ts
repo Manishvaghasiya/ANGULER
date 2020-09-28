@@ -5,8 +5,11 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CONDITION_COLUMN, PARAMS } from '../../../../../shared/constant';
-import { ToastService, ConditionService, PaginationService, TemplateService, ParameterService } from '../../../../../core/services';
-import { ConditionModel, ParameterModel, RuleModel, TemplateModel } from '../../../../../models';
+import {
+  ToastService, ConditionService, PaginationService,
+  TemplateService, ParameterService, RulesService
+} from '../../../../../core/services';
+import { ConditionModel, CreateRuleModel, ParameterModel, RuleModel, TemplateModel } from '../../../../../models';
 import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
@@ -18,6 +21,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class ConditionsComponent implements OnInit {
 
   conditionForm: FormGroup;
+  ruleForm: FormGroup;
+  updateConditionForm: FormGroup;
   conditionId: number;
   conditions: ConditionModel[];
   condition: ConditionModel;
@@ -52,6 +57,7 @@ export class ConditionsComponent implements OnInit {
     private route: ActivatedRoute,
     private paginationService: PaginationService,
     private parameterService: ParameterService,
+    private ruleService: RulesService,
     private matDialog: MatDialog,
     private toastService: ToastService,
     private templateService: TemplateService,
@@ -77,6 +83,15 @@ export class ConditionsComponent implements OnInit {
       parameterValue: new FormControl('', [Validators.required]),
       templateId: new FormControl('', [Validators.required])
     });
+
+    this.updateConditionForm = this.formBuilder.group({
+      parameterValue: new FormControl('', [Validators.required])
+    });
+
+    this.ruleForm = this.formBuilder.group({
+      name: new FormControl('', [Validators.required])
+    });
+
     this.dataSource.sort = this.sort;
   }
 
@@ -195,9 +210,30 @@ export class ConditionsComponent implements OnInit {
     });
   }
 
-  createRule() {
+  evaluteConditions() {
     this.conditionService.createRules(this.selection.selected).subscribe((response: any) => {
       this.evaluatedResponse = response;
+    }, error => {
+      this.toastService.showDanger(error.error.detail);
+    });
+  }
+
+  createRule() {
+    if (this.ruleForm.invalid) {
+      this.ruleForm.markAllAsTouched();
+      return;
+    }
+
+    const ruleModel: CreateRuleModel = {
+      conditions: this.selection.selected,
+      name: this.ruleForm.value.name
+    };
+
+    this.ruleService.createRules(ruleModel).subscribe((response: any) => {
+      this.toastService.showSuccess('Rule created successfully');
+      this.matDialog.closeAll();
+      this.ruleForm.reset();
+      this.router.navigate(['/rules']);
     }, error => {
       this.toastService.showDanger(error.error.detail);
     });
@@ -237,18 +273,19 @@ export class ConditionsComponent implements OnInit {
     });
   }
 
-  updateCondition() {
-    if (this.conditionForm.invalid) {
-      this.conditionForm.markAllAsTouched();
+  updateCondition(data: ConditionModel) {
+
+    if (this.updateConditionForm.invalid) {
+      this.updateConditionForm.markAllAsTouched();
       return;
     }
 
     const condition: ConditionModel = {
-      id: this.conditionId,
-      name: this.conditionForm.value.name,
-      parameterId: this.conditionForm.value.parameterId,
-      parameterValue: this.conditionForm.value.parameterValue,
-      templateId: this.conditionForm.value.templateId
+      id: data.id,
+      name: data.name,
+      parameterId: data.parameterId,
+      parameterValue: this.updateConditionForm.value.parameterValue,
+      templateId: data.templateId
     };
 
     this.conditionService.updateCondition(condition).subscribe(_ => {
@@ -256,7 +293,7 @@ export class ConditionsComponent implements OnInit {
       this.getConditions();
       this.updateFlag = false;
       this.matDialog.closeAll();
-      this.conditionForm.reset();
+      this.updateConditionForm.reset();
     }, error => {
       this.toastService.showDanger(error.error.detail);
     });

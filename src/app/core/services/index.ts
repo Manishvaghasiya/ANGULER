@@ -7,3 +7,4 @@ export * from './data-modification.service';
 export * from './template.service';
 export * from './condition.service';
 export * from './parameter.service';
+export * from './rules.service';

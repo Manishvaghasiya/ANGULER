@@ -13,7 +13,7 @@ export class ConditionService {
         return this.httpService.post(`api/conditions`, condition);
     }
 
-    getConditions(param: Params) {
+    getConditions(param?: Params) {
         return this.httpService.get(`api/conditions?eagerload=true`);
     }
 

@@ -27,6 +27,11 @@ const routes: Routes = [{
       path: 'conditions',
       // canActivate: [AuthGuard],
       loadChildren: () => import(`./modules/conditions/conditions.module`).then(m => m.ConditionsModule)
+    },
+    {
+      path: 'rules',
+      // canActivate: [AuthGuard],
+      loadChildren: () => import(`./modules/rules/rules.module`).then(m => m.RulesModule)
     }
   ]
 }];
