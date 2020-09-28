@@ -142,7 +142,7 @@
 
 <ng-template #updateRuleModal>
     <div class="aw-common-modal">
-        <div class="modal-dialog m-auto">
+        <div class="modal-dialog modal-min m-auto">
             <div class="modal-content border-0">
                 <div class="modal-header">
                     <h5 class="mb-0"><i class="fas fa-edit"></i> Update Rule</h5>
@@ -174,7 +174,7 @@
                                     <div class="form-group">
                                         <label>Select Parameter <span class="required-field">*</span></label>
                                         <mat-select class="form-control" disableOptionCentering
-                                            formControlName="conditions" panelClass="filter-dropdown-single"
+                                            formControlName="conditions" panelClass="filter-dropdown-multi"
                                             placeholder="Select Parameter" multiple>
                                             <mat-option *ngFor="let item of allConditions" [value]="item">
                                                 {{ item.name }}

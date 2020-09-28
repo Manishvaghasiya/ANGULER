@@ -57,9 +57,16 @@
         <ng-container matColumnDef="parameterValue">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Parameter Value</th>
             <td mat-cell *matCellDef="let element">
-                <form [formGroup]="updateConditionForm" class="form ng-pristine ng-invalid ng-touched" novalidate>
-                    <input type="text" class="form-control ng-pristine ng-invalid ng-touched"
+                <form [formGroup]="updateConditionForm" class="form d-flex ng-pristine ng-invalid ng-touched" novalidate>
+                    <input type="text" class="form-control form-control-sm ng-pristine ng-invalid ng-touched"
                         placeholder="{{element?.parameterValue}}" formControlName="parameterValue">
+                        <ul class="list-unstyled action-links ml-2">
+                            <li title="Edit">
+                                <a href="javascript:void(0);" (click)="updateCondition(element)">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </a>
+                            </li>
+                        </ul>
                 </form>
             </td>
         </ng-container>
@@ -285,15 +292,14 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="card">
                         <div *ngIf="evaluatedResponse?.drawBetweenTemplates">
                             We have found multiple templates which are suitable for this condition. which are
                         </div>
                         <div *ngIf="!evaluatedResponse?.drawBetweenTemplates">
                             Templates which have a match with the given conditions.
                         </div>
-                        <div class="card-body">
-                            <table class="table vm font-14">
+                        <div class="table-responsive">
+                            <table class="table mt-3 mb-0 font-14">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -310,12 +316,11 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div *ngIf="!evaluatedResponse?.drawBetweenTemplates">
+                        <div *ngIf="!evaluatedResponse?.drawBetweenTemplates" class="mt-3">
                             Suitable template for this condition from above matches is
                             <b>{{evaluatedResponse?.templates?.name}}</b>, which has match count of
                             <b>{{evaluatedResponse?.templates?.matchCount}}</b>.
                         </div>
-                    </div>
                 </div>
                 <div class="modal-footer justify-content-end">
                     <button type="button" class="btn btn-secondary btn-sm" (click)="selection.clear()"
