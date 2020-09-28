@@ -38,7 +38,7 @@
         </ng-container>
 
         <ng-container matColumnDef="condition">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Template Name</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Conditions</th>
             <td mat-cell *matCellDef="let element">{{element?.conditions?.length}} </td>
         </ng-container>
 
@@ -159,7 +159,7 @@
                                     <div class="form-group">
                                         <label>Name <span class="required-field">*</span></label>
                                         <input type="text" class="form-control ng-pristine ng-invalid ng-touched"
-                                            placeholder="ex. Condition 1" formControlName="name">
+                                            placeholder="ex. Rule 1" formControlName="name">
                                         <div class="error-show" *ngIf="ruleForm.controls.name.errors 
                                     && (ruleForm.controls.name.dirty || ruleForm.controls.name.touched)">
                                             <span *ngIf="ruleForm.controls.name.errors.required">rule name
