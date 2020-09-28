@@ -51,6 +51,11 @@
                             <i class="fas fa-edit" style="font-size: 12px;"> </i>
                         </a>
                     </li>
+                    <li title="Preview">
+                        <a href="javascript:void(0);" (click)="openDialog(previewTemplate)">
+                            <i class="fas fa-file-pdf" style="font-size: 12px;"> </i>
+                        </a>
+                    </li>
                     <li title="Delete">
                         <a href="javascript:void(0);" (click)="conditionId = element.id; openDialog(deleteRuleModel)">
                             <i class="fas fa-trash-alt" style="font-size: 12px;"> </i>
@@ -195,6 +200,33 @@
                 </div>
                 <div class="modal-footer justify-content-end">
                     <button type="button" (click)="updateRule()" class="btn btn-primary btn-sm">Submit</button>
+                    <button type="button" class="btn btn-secondary btn-sm" (click)="ruleForm.reset()"
+                        matDialogClose>Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #previewTemplate>
+    <div class="aw-common-modal">
+        <div class="modal-dialog m-auto">
+            <div class="modal-content border-0">
+                <div class="modal-header">
+                    <h5 class="mb-0"><i class="fas fa-edit"></i> Template</h5>
+                    <button type="button" class="close" (click)="ruleForm.reset()" data-dismiss="modal"
+                        aria-label="Close" matDialogClose>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <!--  add template here -->
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end">
+                    <button type="button" class="btn btn-primary btn-sm"> Export</button>
                     <button type="button" class="btn btn-secondary btn-sm" (click)="ruleForm.reset()"
                         matDialogClose>Cancel</button>
                 </div>
