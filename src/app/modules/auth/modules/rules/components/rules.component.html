@@ -211,7 +211,7 @@
 
 <ng-template #previewTemplate>
     <div class="aw-common-modal">
-        <div class="modal-dialog m-auto">
+        <div class="modal-dialog modal-xl m-auto">
             <div class="modal-content border-0">
                 <div class="modal-header">
                     <h5 class="mb-0"><i class="fas fa-edit"></i> Template</h5>
@@ -220,10 +220,202 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div>
-                        <!--  add template here -->
+                <div class="modal-body modal-scroll">
+
+                    <div class="table-responsive invoice-table">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td>
+                                    <table class="w-100">
+                                        <tr>
+                                            <td class="p-2">
+                                                <b>Hexaware Entity Name</b> <br>
+                                                Unit Name, Address 1, Address 2 <br>
+                                                Address 3, Address 4 <br>
+                                                Phone
+                                            </td>
+                                            <td class="text-right p-2">
+                                                <a href="#"><img src="../../../../../../assets/images/Capture.JPG" alt="Capture"></a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-center tax-invoice-heading"><b>TAX INVOICE</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table class="w-100">
+                                        <tr>
+                                            <td class="p-2">
+                                                <b>Bill To <br> Client Name</b> <br>
+                                                Address 1 <br>
+                                                Address 2 <br>
+                                                Location & Pin <br>
+                                                Country <br>
+                                                Kind Attn.: -- <br>
+                                                Phone No. : -- <br>
+                                                Tax Registration No <br>
+                                                Payer Information <br>
+                                            </td>
+                                            <td class="p-2">
+                                                <b>Ship To <br> Client Name</b> <br>
+                                                <br>
+                                                Address 1 <br>
+                                                Address 2 <br>
+                                                Location & Pin <br>
+                                                Country <br>
+                                                Country of Origin: <br>
+                                                Country of Destination:  <br>
+                                                Place of Supply: <br>
+                                            </td>
+                                            <td class="p-2" width="100">
+                                                <b>QR Code</b> <br>
+                                            </td>
+                                            <td class="p-2">
+                                                <div class="text-center">ORIGINAL FOR RECIPIENT</div>
+                                                Invoice No. <br>
+                                                Invoice Date (mm-dd-yyyy) <br>
+                                                Payment Terms <br>
+                                                Due Date (mm-dd-yyyy) <br>
+                                                P.O. Ref <br>
+                                                SOW Ref <br>
+                                                <b>Supplier Code</b> <br>
+                                                <b>IRN No</b>
+                                            </td>
+                                            
+                                        </tr>   
+                                    </table>     
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table class="w-100">
+                                        <tr class="tax-invoice-heading">
+                                            <td class="pl-2"><b>Description</b></td>
+                                            <td class="text-center border-left-solid"><b>QTY <br> (UOM)</b></td>
+                                            <td class="text-center border-left-solid"><b>Rate</b></td>
+                                            <td class="text-center border-left-solid"><b>Amount <br> (Currency)</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-2">Service Description</td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-2">Header Note 1: SOW Description</td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-2">Header Note :2</td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-2">Header Note 3</td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-2">Line Item 1</td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-2">Line Item 2</td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-2">Line Item 3</td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-2">Line Item 4</td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-2">Line Item 5</td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-2">Line Item 6</td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-2">Line Item 7</td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-2">Line Item 8</td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-2">Line Item 9</td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-2">Line Item 10</td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-2">Line Item 11</td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="pl-2">Line Item 12</td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                            <td class="border-left-solid"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="pl-2 border-top-solid"><b>Gross Taxable Value</b></td>
+                                            <td class="border-left-solid border-top-solid"></td>
+                                        </tr>
+                                        <!-- <tr>
+                                            <td colspan="3" class="pl-2 border-top-solid">
+
+                                            </td>
+                                            <td class="border-left-solid tax-invoice-heading"></td>
+                                        </tr> -->
+                                    </table>    
+                                </td>
+                            </tr>
+                        </table>
                     </div>
+
                 </div>
                 <div class="modal-footer justify-content-end">
                     <button type="button" class="btn btn-primary btn-sm"> Export</button>

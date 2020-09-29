@@ -1,9 +1,45 @@
 b {
     font-weight: 500;
 }
-
+.modal-xl{
+    max-width: initial;
+    width: 1100px;
+}
 @media (min-width: 576px) { 
     .modal-min{
         min-width: 450px;
     } 
+}
+.invoice-table table tr td{
+    padding: 0;
+    font-size: 14px;
+    color: #000;
+    font-weight: 400;
+}
+.invoice-table > table{
+    border: solid 1px #000;
+}
+.tax-invoice-heading{
+    border-top: solid 1px #000;
+    border-bottom: solid 1px #000;
+    background-color: #eee;
+}
+.invoice-table b{
+ font-weight: 600;
+}
+.border-left-solid{
+    border-left: solid 1px #000;
+}
+.border-right-solid{
+    border-right: solid 1px #000;
+}
+.border-top-solid{
+    border-top: solid 1px #000;
+}
+.border-bottom-solid{
+    border-bottom: solid 1px #000;
+}
+.modal-scroll{
+    max-height: 500px;
+    overflow: auto;
 }
