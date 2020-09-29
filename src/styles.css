@@ -823,3 +823,7 @@ color: #fff;
 .mat-checkbox .mat-checkbox-input {
     visibility: hidden;
 }
+
+.cdk-overlay-pane {
+    max-width: inherit !important;
+}

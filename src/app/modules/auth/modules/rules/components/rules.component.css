@@ -3,8 +3,19 @@ b {
 }
 .modal-xl{
     max-width: initial;
-    width: 1100px;
+    width: 100%x;
 }
+@media (min-width: 992px) { 
+    .modal-xl{
+        width: 900px;
+    }
+}
+@media (min-width: 1200px) { 
+    .modal-xl{
+        width: 1100px;
+    }
+}
+
 @media (min-width: 576px) { 
     .modal-min{
         min-width: 450px;
@@ -42,4 +53,13 @@ b {
 .modal-scroll{
     max-height: 500px;
     overflow: auto;
+}
+.border-bottom-none{
+    border-bottom: 0;
+}
+span.tax-line {
+    display: inline-block;
+    width: 60px;
+    height: 1px;
+    background-color: #000;
 }
