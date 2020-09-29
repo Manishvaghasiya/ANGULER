@@ -52,7 +52,8 @@
                         </a>
                     </li>
                     <li title="Preview">
-                        <a href="javascript:void(0);" (click)="openDialog(previewTemplate)">
+                        <a href="javascript:void(0);"
+                            (click)="templateName=element?.templatesDTO?.name; templateData= element; openDialog(previewTemplate)">
                             <i class="fas fa-file-pdf" style="font-size: 12px;"> </i>
                         </a>
                     </li>

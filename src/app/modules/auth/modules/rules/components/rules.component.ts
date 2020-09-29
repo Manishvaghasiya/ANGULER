@@ -24,6 +24,8 @@ export class RulesComponent implements OnInit {
   rules: RuleModel[];
   rule: RuleModel;
   allConditions: ConditionModel[];
+  templateName: string;
+  templateData: CreateRuleModel;
 
   // tabuler var
   dataSource = new MatTableDataSource();
@@ -88,7 +90,7 @@ export class RulesComponent implements OnInit {
       const pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
       const position = 0;
       pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-      pdf.save('MYPdf.pdf'); // Generated PDF
+      pdf.save(this.templateName + '.pdf'); // Generated PDF
     });
   }
 
