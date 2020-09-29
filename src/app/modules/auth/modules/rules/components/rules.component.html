@@ -214,15 +214,14 @@
         <div class="modal-dialog modal-xl m-auto">
             <div class="modal-content border-0">
                 <div class="modal-header">
-                    <h5 class="mb-0"><i class="fas fa-edit"></i> Template</h5>
-                    <button type="button" class="close" (click)="ruleForm.reset()" data-dismiss="modal"
-                        aria-label="Close" matDialogClose>
+                    <h5 class="mb-0"><i class="fas fa-file-pdf"></i> Template</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" matDialogClose>
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body modal-scroll">
 
-                    <div class="table-responsive invoice-table">
+                    <div class="table-responsive invoice-table" id="contentToConvert">
                         <table class="table table-borderless">
                             <tr>
                                 <td>
@@ -235,7 +234,8 @@
                                                 Phone
                                             </td>
                                             <td class="text-right p-2">
-                                                <a href="#"><img src="../../../../../../assets/images/Capture.JPG" alt="Capture"></a>
+                                                <a href="#"><img src="../../../../../../assets/images/Capture.JPG"
+                                                        alt="Capture"></a>
                                             </td>
                                         </tr>
                                     </table>
@@ -267,7 +267,7 @@
                                                 Location & Pin <br>
                                                 Country <br>
                                                 Country of Origin: <br>
-                                                Country of Destination:  <br>
+                                                Country of Destination: <br>
                                                 Place of Supply: <br>
                                             </td>
                                             <td class="p-2" width="100">
@@ -284,9 +284,9 @@
                                                 <b>Supplier Code</b> <br>
                                                 <b>IRN No</b>
                                             </td>
-                                            
-                                        </tr>   
-                                    </table>     
+
+                                        </tr>
+                                    </table>
                                 </td>
                             </tr>
                             <tr>
@@ -401,7 +401,8 @@
                                             <td class="border-left-solid"></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="3" class="pl-2 border-top-solid"><b>Gross Taxable Value</b></td>
+                                            <td colspan="3" class="pl-2 border-top-solid"><b>Gross Taxable Value</b>
+                                            </td>
                                             <td class="border-left-solid border-top-solid"></td>
                                         </tr>
                                         <!-- <tr>
@@ -410,7 +411,7 @@
                                             </td>
                                             <td class="border-left-solid tax-invoice-heading"></td>
                                         </tr> -->
-                                    </table>    
+                                    </table>
                                 </td>
                             </tr>
                         </table>
@@ -418,9 +419,9 @@
 
                 </div>
                 <div class="modal-footer justify-content-end">
-                    <button type="button" class="btn btn-primary btn-sm"> Export</button>
-                    <button type="button" class="btn btn-secondary btn-sm" (click)="ruleForm.reset()"
-                        matDialogClose>Cancel</button>
+                    <button type="button" class="btn btn-primary btn-sm" (click)="captureScreen()" matDialogClose>
+                        Export</button>
+                    <button type="button" class="btn btn-secondary btn-sm" matDialogClose>Cancel</button>
                 </div>
             </div>
         </div>

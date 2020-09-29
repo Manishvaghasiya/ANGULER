@@ -8,6 +8,8 @@ import { PARAMS, RULE_COLUMN } from '../../../../../shared/constant';
 import { ToastService, RulesService, PaginationService, ConditionService } from '../../../../../core/services';
 import { ConditionModel, CreateRuleModel, RuleModel } from '../../../../../models';
 import { SelectionModel } from '@angular/cdk/collections';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-rules',
@@ -71,6 +73,23 @@ export class RulesComponent implements OnInit {
 
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  captureScreen() {
+    const data = document.getElementById('contentToConvert');
+    html2canvas(data).then(canvas => {
+      // Few necessary setting options
+      const imgWidth = 208;
+      const pageHeight = 295;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
+      const position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
+      pdf.save('MYPdf.pdf'); // Generated PDF
+    });
   }
 
   pageSizeChange() {
