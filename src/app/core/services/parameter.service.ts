@@ -29,4 +29,10 @@ export class ParameterService {
         return this.httpService.delete(`api/parameters/${id}`);
     }
 
+    addParamFile(file: any) {
+        const formData: FormData = new FormData();
+        formData.append('file', file.file);
+        return this.httpService.postWithFile(`api/parameters/file`, formData);
+    }
+
 }

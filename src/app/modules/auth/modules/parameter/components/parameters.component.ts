@@ -17,11 +17,18 @@ import { ParameterModel, TemplateModel } from '../../../../../models';
 export class ParametersComponent implements OnInit {
 
   parameterForm: FormGroup;
+  paramFileForm: FormGroup;
   parameterId: number;
   parameters: ParameterModel[];
   parameter: ParameterModel;
   updateFlag = false;
   allTemplates: TemplateModel[];
+
+  // upload file
+  fileErrorFlag: boolean;
+  files: File[];
+  name: string;
+  fileTypeErrorFlag: boolean;
 
   // tabuler var
   dataSource = new MatTableDataSource();
@@ -70,6 +77,11 @@ export class ParametersComponent implements OnInit {
       description: new FormControl(''),
       templates: new FormControl('', [Validators.required])
     });
+
+    this.paramFileForm = this.formBuilder.group({
+      file: new FormControl('', [Validators.required])
+    });
+
     this.dataSource.sort = this.sort;
   }
 
@@ -114,12 +126,44 @@ export class ParametersComponent implements OnInit {
       this.setParameterData(data);
     } else {
       this.updateFlag = false;
+      this.fileTypeErrorFlag = false;
+      this.fileErrorFlag = false;
+      this.name = '';
+      this.files = [];
     }
     this.matDialog.open(dialog, {
       autoFocus: false,
       closeOnNavigation: true,
       disableClose: true
     });
+  }
+
+  onSelectFile(event: { target: { files: File[]; }; }) {
+    this.name = '';
+    this.files = [];
+    if (this.validateFile(event.target.files[0])) {
+      this.files.push(event.target.files[0]);
+      const reader = new FileReader();
+      reader.readAsDataURL(this.files[0]);
+      this.name = this.files[0].name;
+    }
+  }
+
+  validateFile(file: File) {
+    if (file && file.size < 10485760) {
+      this.fileErrorFlag = false;
+      const extension = file.name.split('.').pop().toLowerCase();
+      if (!['csv'].includes(extension)) {
+        this.name = '';
+        this.files = [];
+        this.fileTypeErrorFlag = true;
+        return false;
+      }
+      this.fileTypeErrorFlag = false;
+      return true;
+    }
+    this.fileErrorFlag = true;
+    return false;
   }
 
   setParameterData(parameter: ParameterModel) {
@@ -134,6 +178,26 @@ export class ParametersComponent implements OnInit {
       });
     });
     this.parameterForm.controls.templates.setValue(templates);
+  }
+
+  getParamsFromFile() {
+    if (this.paramFileForm.invalid) {
+      this.fileErrorFlag = this.files[0] ? false : true;
+      this.paramFileForm.markAllAsTouched();
+      return;
+    }
+
+    const paramFile = {
+      file: this.files[0]
+    };
+
+    this.parameterService.addParamFile(paramFile).subscribe((response: any) => {
+      this.getParameters();
+      this.matDialog.closeAll();
+      this.paramFileForm.reset();
+    }, error => {
+      this.toastService.showDanger(error.error.detail);
+    });
   }
 
   getParameters() {
