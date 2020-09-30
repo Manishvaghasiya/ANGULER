@@ -219,7 +219,7 @@
                                             (change)="onSelectFile($event);" formControlName="file">
                                         <div class="error-show" *ngIf="fileTypeErrorFlag || fileErrorFlag">
                                             <span *ngIf="fileTypeErrorFlag">Only .csv file is allowed.</span>
-                                            <span *ngIf="fileErrorFlag">param file is required.</span>
+                                            <span *ngIf="fileErrorFlag"> Max 10 MB .csv file is allowed.</span>
                                         </div>
                                     </div>
                                 </div>
