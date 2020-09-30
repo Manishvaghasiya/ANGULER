@@ -96,10 +96,6 @@ export class TemplatesComponent implements OnInit {
     );
   }
 
-  goBack() {
-    this.paginationService.goBackToHome('/dashboard');
-  }
-
   openDialog(dialog: TemplateRef<any>, data?: TemplateModel) {
     if (data) {
       this.updateFlag = true;

@@ -7,12 +7,12 @@ const routes: Routes = [{
   path: '',
   component: FullComponent,
   children: [
-    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-    {
-      path: 'dashboard',
-      // canActivate: [AuthGuard],
-      loadChildren: () => import(`./modules/dashboard/dashboard.module`).then(m => m.DashboardModule)
-    },
+    { path: '', redirectTo: 'templates', pathMatch: 'full' },
+    // {
+    //   path: 'dashboard',
+    //   // canActivate: [AuthGuard],
+    //   loadChildren: () => import(`./modules/dashboard/dashboard.module`).then(m => m.DashboardModule)
+    // },
     {
       path: 'templates',
       // canActivate: [AuthGuard],

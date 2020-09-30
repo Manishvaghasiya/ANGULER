@@ -147,10 +147,6 @@ export class ConditionsComponent implements OnInit {
     );
   }
 
-  goBack() {
-    this.paginationService.goBackToHome('/dashboard');
-  }
-
   openDialog(dialog: TemplateRef<any>, data?: ConditionModel) {
     if (data) {
       this.updateFlag = true;

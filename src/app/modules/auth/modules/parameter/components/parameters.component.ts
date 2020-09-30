@@ -115,10 +115,6 @@ export class ParametersComponent implements OnInit {
     );
   }
 
-  goBack() {
-    this.paginationService.goBackToHome('/dashboard');
-  }
-
   openDialog(dialog: TemplateRef<any>, data?: ParameterModel) {
     if (data) {
       this.updateFlag = true;

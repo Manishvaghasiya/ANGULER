@@ -120,10 +120,6 @@ export class RulesComponent implements OnInit {
     );
   }
 
-  goBack() {
-    this.paginationService.goBackToHome('/dashboard');
-  }
-
   openDialog(dialog: TemplateRef<any>, data?: CreateRuleModel) {
     if (data) {
       this.ruleId = data.id;
