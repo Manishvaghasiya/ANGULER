@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../../../../shared/shared.module';
 import { ParametersComponent } from './components';
 import { ParametersRoutingModule } from './parameters-routing.module';
+import { TemplatePipe } from '../../../../core/pipe/template.pipe';
 
 @NgModule({
   declarations: [
-    ParametersComponent
+    ParametersComponent,
+    TemplatePipe
   ],
   imports: [
     CommonModule,

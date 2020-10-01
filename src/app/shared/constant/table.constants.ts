@@ -15,7 +15,7 @@ export const CONDITION_COLUMN = ['id', 'name', 'parameterId', 'parameterValue', 
 export const RULE_COLUMN = ['id', 'name', 'templateName', 'condition', 'actions'];
 
 // parameter table
-export const PARAMETER_COLUMN = ['id', 'name', 'description', 'conditions', 'actions'];
+export const PARAMETER_COLUMN = ['id', 'name', 'description', 'conditions', 'templates', 'actions'];
 
 // shared constants
 export const STATUS = ['ACTIVE', 'INACTIVE'];
