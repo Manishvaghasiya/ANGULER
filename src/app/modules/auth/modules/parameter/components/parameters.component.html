@@ -218,7 +218,7 @@
                         <form [formGroup]="paramFileForm" class="form ng-pristine ng-invalid ng-touched" novalidate>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="form-group">
+                                    <div class="form-group upload-btn">
                                         <input type="file" class="form-control ng-pristine ng-invalid ng-touched"
                                             placeholder="{{name ? name : 'Choose file ( Only .csv file is allowed )'}} "
                                             (change)="onSelectFile($event);" formControlName="file">

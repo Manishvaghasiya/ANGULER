@@ -1,0 +1,12 @@
+.upload-btn .form-control::-webkit-file-upload-button {
+    background: #e99339;
+    border: 0;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 20px;
+    padding: 5px 10px;
+}
+.upload-btn .form-control{
+    height: auto;
+    background-color: #eee;
+}
