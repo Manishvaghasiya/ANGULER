@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   environment: 'PROD',
-  origin: ''
+  origin: 'http://' + window.location.hostname + ':8080'
 };
